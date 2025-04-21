@@ -23,8 +23,6 @@ export class BlinkingButtonComponent implements OnInit {
 
   private readonly animationBuilder: AnimationBuilder = inject(AnimationBuilder)
 
-  private blinkingIntervalRef: any;
-
   ngOnInit(): void {
     this.animationBuilder.build([
       trigger('blinking', [
