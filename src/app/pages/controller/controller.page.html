@@ -1,7 +1,18 @@
 <ion-content [fullscreen]="true">
-  <app-blinking-button
-    icon="caret-back"
-    type="LEFT_TURN_SIGNAL"
-    blinkColor="success"
-  />
+  <div class="flex justify-between p-2">
+    <app-blinking-button
+      icon="caret-back"
+      type="LEFT_TURN_SIGNAL"
+      blinkColor="success"
+      [blink]="blinkerLeft()"
+      (onClick)="turnSignal($event)"
+    />
+    <app-blinking-button
+      icon="caret-forward"
+      type="right_TURN_SIGNAL"
+      blinkColor="success"
+      [blink]="blinkerRight()"
+      (onClick)="turnSignal($event)"
+    />
+  </div>
 </ion-content>

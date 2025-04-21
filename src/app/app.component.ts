@@ -17,7 +17,7 @@ import {IPage} from "./shared/interfaces/page.interface";
 import {pages} from "./shared/constants/pages.constants";
 import {TranslateModule, TranslatePipe} from "@ngx-translate/core";
 import {addIcons} from "ionicons";
-import {caretBack, gameController, settings} from "ionicons/icons";
+import {caretBack, caretForward, gameController, settings} from "ionicons/icons";
 
 @Component({
   selector: 'app-root',
@@ -53,6 +53,7 @@ export class AppComponent {
       gameController,
       settings,
       caretBack,
+      caretForward
     });
   }
 }
