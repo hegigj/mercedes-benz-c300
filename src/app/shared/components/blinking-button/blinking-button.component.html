@@ -1,3 +1,11 @@
-<ion-button [size]="buttonSize()" (click)="click($event)">
-  <ion-icon slot="icon-only" [ios]="icon()" [md]="icon()"/>
+<ion-button
+  [color]="_buttonColor()"
+  [size]="buttonSize()"
+  (click)="click($event)"
+>
+  <ion-icon
+    slot="icon-only"
+    [ios]="icon()"
+    [md]="icon()"
+  />
 </ion-button>

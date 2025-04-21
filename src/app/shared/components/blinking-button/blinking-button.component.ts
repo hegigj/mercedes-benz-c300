@@ -1,8 +1,8 @@
-import { animate, AnimationBuilder, state, style, transition, trigger } from '@angular/animations';
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import {Component, inject, Input, input, OnChanges, output, signal, SimpleChanges} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IOutputPayload } from '../../interfaces/output-payload.interface';
 import { SizeType } from '../../types/size.type';
+import {SoundService} from "../../services/sound.service";
 
 @Component({
   selector: 'app-blinking-button',
@@ -12,41 +12,91 @@ import { SizeType } from '../../types/size.type';
   ],
   standalone: true
 })
-export class BlinkingButtonComponent implements OnInit {
-  blink = input<boolean>(false);
+export class BlinkingButtonComponent implements OnChanges {
+  @Input()
+  buttonColor: string = 'light';
+
+  @Input()
+  blink = false;
+
+  blinkColor = input.required<string>();
   buttonSize = input<SizeType>('large');
   icon = input.required<string>();
-  interval = input<number>(600);
+  interval = input<number>(375);
   type = input.required<string>();
 
-  onClick = output<IOutputPayload>();
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  public onClick = output<IOutputPayload>();
 
-  private readonly animationBuilder: AnimationBuilder = inject(AnimationBuilder)
+  private blinkingIntervalRef: any;
 
-  ngOnInit(): void {
-    this.animationBuilder.build([
-      trigger('blinking', [
-        state('tik', style({})),
-        state('tak', style({})),
-        transition('tik <=> tak', [animate(`${this.interval()}ms ease-in-out`)])
-      ])
-    ]);
+  protected _buttonColor = signal<string>('light');
+
+  private readonly soundService: SoundService = inject(SoundService);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('blink' in changes) {
+      if (this.blink) {
+        this.startBlinking();
+      } else {
+        this.endBlinking();
+      }
+    }
+
+    if ('buttonColor' in changes) {
+      this._buttonColor.set(this.buttonColor);
+    }
   }
 
   protected click(event: MouseEvent): void {
     event.preventDefault();
 
-    this.startBlinking();
-
-    this.onClick.emit({
-      type: this.type(),
-      payload: {}
-    });
+    if (this.blink) {
+      this.soundService.stopBlinkerSound();
+      this.endBlinking();
+    } else {
+      this.soundService.playBlinkerSound();
+      this.startBlinking();
+    }
   }
 
   private startBlinking(): void {
+    this.blink = true;
 
+    this.onClick.emit({
+      type: this.type(),
+      payload: {
+        blink: this.blink
+      }
+    });
+
+    this.blinkingIntervalRef = setInterval(
+      () => {
+        if (this._buttonColor() === this.buttonColor) {
+          this._buttonColor.set(this.blinkColor());
+        } else {
+          this._buttonColor.set(this.buttonColor);
+        }
+      },
+      this.interval()
+    );
   }
 
-  private endBlinking(): void {}
+  private endBlinking(): void {
+    this.blink = false;
+
+    this.onClick.emit({
+      type: this.type(),
+      payload: {
+        blink: this.blink
+      }
+    });
+
+    if (this.blinkingIntervalRef) {
+      clearInterval(this.blinkingIntervalRef);
+      this.blinkingIntervalRef = null;
+    }
+
+    this._buttonColor.set(this.buttonColor);
+  }
 }

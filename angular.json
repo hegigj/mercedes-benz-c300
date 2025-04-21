@@ -7,14 +7,14 @@
       "projectType": "application",
       "schematics": {
         "@ionic/angular-toolkit:page": {
+          "standalone": true,
           "style": "none",
-          "styleext": "none",
-          "standalone": true
+          "styleext": "none"
         },
         "@ionic/angular-toolkit:component": {
+          "standalone": true,
           "style": "none",
-          "styleext":  "none",
-          "standalone": true
+          "styleext":  "none"
         }
       },
       "root": "",
