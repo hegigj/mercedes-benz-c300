@@ -7,7 +7,13 @@
       "projectType": "application",
       "schematics": {
         "@ionic/angular-toolkit:page": {
-          "styleext": "scss",
+          "style": "none",
+          "styleext": "none",
+          "standalone": true
+        },
+        "@ionic/angular-toolkit:component": {
+          "style": "none",
+          "styleext":  "none",
           "standalone": true
         }
       },
