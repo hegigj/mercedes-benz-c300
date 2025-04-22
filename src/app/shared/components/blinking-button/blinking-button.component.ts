@@ -58,10 +58,6 @@ export class BlinkingButtonComponent implements OnChanges {
       this.soundService.playBlinkerSound();
       this.startBlinking();
     }
-  }
-
-  private startBlinking(): void {
-    this.blink = true;
 
     this.onClick.emit({
       type: this.type(),
@@ -69,6 +65,10 @@ export class BlinkingButtonComponent implements OnChanges {
         blink: this.blink
       }
     });
+  }
+
+  private startBlinking(): void {
+    this.blink = true;
 
     this.blinkingIntervalRef = setInterval(
       () => {
@@ -84,13 +84,6 @@ export class BlinkingButtonComponent implements OnChanges {
 
   private endBlinking(): void {
     this.blink = false;
-
-    this.onClick.emit({
-      type: this.type(),
-      payload: {
-        blink: this.blink
-      }
-    });
 
     if (this.blinkingIntervalRef) {
       clearInterval(this.blinkingIntervalRef);
