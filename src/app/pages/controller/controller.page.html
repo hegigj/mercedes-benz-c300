@@ -11,7 +11,23 @@
     </ion-button>
   </section>
 
-  <section class="flex flex-nowrap justify-between py-2 px-4">
-
+  <section class="flex flex-nowrap gap-8 py-2 px-4">
+    <div>
+      <app-accelerator-range/>
+    </div>
+    <div>
+      <div class="flex flex-nowrap gap-8">
+        <app-rpm-range/>
+      </div>
+      <div class="flex flex-nowrap gap-8">
+        <app-shifter-range/>
+        <div>
+          <app-steering-range/>
+          <ion-button color="light" shape="round" size="large" (click)="controllerService.startStopCar()">
+            <ion-icon slot="icon-only" ios="power" md="power"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
   </section>
 </ion-content>

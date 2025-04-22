@@ -12,10 +12,12 @@ export class SoundService {
 
   constructor() {
     this.blinkerAudio.src = './assets/sound/blinker.mp3';
+    this.blinkerAudio.loop = true;
     this.blinkerAudio.load();
 
-    this.engineAudio.src = './assets/sound/blinker.mp3';
+    this.engineAudio.src = './assets/sound/engine.mp3';
     this.engineAudio.volume = this.engineIdleVolume;
+    this.engineAudio.loop = true;
     this.engineAudio.load();
   }
 
