@@ -57,7 +57,10 @@ export class AppComponent {
       triangle,
       add,
       remove,
-      power
+      power,
+      'low-beam': './assets/icon/low-beam.svg',
+      'high-beam': './assets/icon/high-beam.svg',
+      'low-fuel': './assets/icon/low-fuel.svg',
     });
   }
 }

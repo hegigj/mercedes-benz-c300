@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import {IonRange} from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-accelerator-range',
   templateUrl: './accelerator-range.component.html',
-  styleUrls: ['./accelerator-range.component.none'],
   standalone: true,
+  imports: [
+    IonRange
+  ]
 })
 export class AcceleratorRangeComponent  implements OnInit {
+  protected value = signal<number>(20);
 
   constructor() { }
 

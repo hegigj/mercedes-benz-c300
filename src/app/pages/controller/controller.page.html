@@ -1,33 +1,40 @@
 <ion-content [fullscreen]="true">
   <section class="flex flex-nowrap justify-between py-2 px-4">
-    <ion-button color="light" size="large">
+    <ion-button color="light" size="large" (click)="controllerService.downShift()">
       <ion-icon slot="icon-only" ios="remove" md="remove"></ion-icon>
     </ion-button>
 
     <app-turn-signals-and-hazard-lights/>
 
-    <ion-button color="light" size="large">
+    <ion-button color="light" size="large" (click)="controllerService.upShift()">
       <ion-icon slot="icon-only" ios="add" md="add"></ion-icon>
     </ion-button>
   </section>
 
-  <section class="flex flex-nowrap gap-8 py-2 px-4">
-    <div>
+  <section class="grid grid-cols-3 grid-rows-3 py-2 px-4">
+    <div
+      aria-label="accelerator-content"
+      class="row-span-3"
+    >
       <app-accelerator-range/>
     </div>
-    <div>
-      <div class="flex flex-nowrap gap-8">
-        <app-rpm-range/>
-      </div>
-      <div class="flex flex-nowrap gap-8">
-        <app-shifter-range/>
-        <div>
-          <app-steering-range/>
-          <ion-button color="light" shape="round" size="large" (click)="controllerService.startStopCar()">
-            <ion-icon slot="icon-only" ios="power" md="power"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
+    <div aria-label="dashboard-content">
+      <app-dashboard/>
+    </div>
+    <div aria-label="lights-content"></div>
+    <div
+      aria-label="shifter-content"
+      class="row-span-2"
+    >
+      <app-shifter-range/>
+    </div>
+    <div aria-label="steering-content">
+      <app-steering-range/>
+    </div>
+    <div aria-label="start-stop-content">
+      <ion-button color="light" shape="round" size="large" (click)="controllerService.startStopCar()">
+        <ion-icon slot="icon-only" ios="power" md="power"></ion-icon>
+      </ion-button>
     </div>
   </section>
 </ion-content>

@@ -1,2 +1,29 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer utilities {
+  .dashboard-container {
+    @apply grid grid-cols-4 grid-rows-2 gap-1 p-2 border-2 border-solid rounded-lg w-full;
+
+    .gear-shifter {
+      @apply flex justify-between border border-solid rounded-lg p-2;
+    }
+
+    .lights {
+      @apply flex items-center justify-center;
+    }
+  }
+
+  ion-range{
+    &.accelerator-range {
+      @apply -rotate-90;
+    }
+
+    &.rpm-range {
+      --knob-size: 15px;
+    }
+  }
+}

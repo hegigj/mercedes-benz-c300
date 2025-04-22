@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+  <div class="col-span-4">
+    <app-rpm-range/>
+  </div>
+  <div class="gear-shifter">
+    <ion-label [color]="shifterModeColor()">{{shifterMode()}}</ion-label>
+    <ion-label [color]="gearColor()">{{gear()}}</ion-label>
+  </div>
+  <div class="lights">
+    <ion-icon [color]="lowBeamColor()" ios="low-beam" md="low-beam"/>
+  </div>
+  <div class="lights">
+    <ion-icon [color]="highBeamColor()" ios="high-beam" md="high-beam"/>
+  </div>
+  <div class="lights">
+    <ion-icon [color]="lowFuelColor()" ios="low-fuel" md="low-fuel"/>
+  </div>
+</div>
