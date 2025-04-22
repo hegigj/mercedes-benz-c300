@@ -1,6 +1,17 @@
-import {Component, inject, Input, input, OnChanges, output, signal, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  input,
+  OnChanges,
+  Output,
+  signal,
+  SimpleChanges
+} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IOutputPayload } from '../../interfaces/output-payload.interface';
+import { EBlinkingLights } from '../../enums/blinking-lights.enum';
+import { IBlinkingButtonAction } from '../../interfaces/blinking-button-action.interface';
 import { SizeType } from '../../types/size.type';
 import {SoundService} from "../../services/sound.service";
 
@@ -19,14 +30,14 @@ export class BlinkingButtonComponent implements OnChanges {
   @Input()
   blink = false;
 
+  @Output()
+  action = new EventEmitter<IBlinkingButtonAction>()
+
   blinkColor = input.required<string>();
   buttonSize = input<SizeType>('large');
   icon = input.required<string>();
   interval = input<number>(375);
-  type = input.required<string>();
-
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onClick = output<IOutputPayload>();
+  type = input.required<EBlinkingLights>();
 
   private blinkingIntervalRef: any;
 
@@ -36,11 +47,11 @@ export class BlinkingButtonComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('blink' in changes) {
-      if (this.blink) {
-        this.startBlinking();
-      } else {
-        this.endBlinking();
-      }
+      this.endBlinking();
+
+      this.blink
+        ? this.startBlinking()
+        : this.endBlinking();
     }
 
     if ('buttonColor' in changes) {
@@ -51,25 +62,28 @@ export class BlinkingButtonComponent implements OnChanges {
   protected click(event: MouseEvent): void {
     event.preventDefault();
 
+    this.endBlinking();
+    this.soundService.stopBlinkerSound();
+
     if (this.blink) {
-      this.soundService.stopBlinkerSound();
+      this.blink = false;
       this.endBlinking();
+      this.soundService.stopBlinkerSound();
     } else {
-      this.soundService.playBlinkerSound();
+      this.blink = true;
       this.startBlinking();
+      this.soundService.playBlinkerSound();
     }
 
-    this.onClick.emit({
+    this.action.emit({
       type: this.type(),
       payload: {
-        blink: this.blink
+        blinking: this.blink
       }
     });
   }
 
   private startBlinking(): void {
-    this.blink = true;
-
     this.blinkingIntervalRef = setInterval(
       () => {
         if (this._buttonColor() === this.buttonColor) {
@@ -83,8 +97,6 @@ export class BlinkingButtonComponent implements OnChanges {
   }
 
   private endBlinking(): void {
-    this.blink = false;
-
     if (this.blinkingIntervalRef) {
       clearInterval(this.blinkingIntervalRef);
       this.blinkingIntervalRef = null;

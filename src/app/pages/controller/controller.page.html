@@ -1,18 +1,17 @@
 <ion-content [fullscreen]="true">
-  <div class="flex justify-between p-2">
-    <app-blinking-button
-      icon="caret-back"
-      type="LEFT_TURN_SIGNAL"
-      blinkColor="success"
-      [blink]="blinkerLeft()"
-      (onClick)="turnSignal($event)"
-    />
-    <app-blinking-button
-      icon="caret-forward"
-      type="right_TURN_SIGNAL"
-      blinkColor="success"
-      [blink]="blinkerRight()"
-      (onClick)="turnSignal($event)"
-    />
-  </div>
+  <section class="flex flex-nowrap justify-between py-2 px-4">
+    <ion-button color="light" size="large">
+      <ion-icon slot="icon-only" ios="remove" md="remove"></ion-icon>
+    </ion-button>
+
+    <app-turn-signals-and-hazard-lights/>
+
+    <ion-button color="light" size="large">
+      <ion-icon slot="icon-only" ios="add" md="add"></ion-icon>
+    </ion-button>
+  </section>
+
+  <section class="flex flex-nowrap justify-between py-2 px-4">
+
+  </section>
 </ion-content>

@@ -1,0 +1,21 @@
+<app-blinking-button
+  [blink]="_leftBlinker()"
+  [type]="blinkingLights.LEFT_TURN_SIGNAL"
+  blinkColor="success"
+  icon="caret-back"
+  (action)="turnSignals($event)"
+/>
+<app-blinking-button
+  [blink]="_hazardLights()"
+  [type]="blinkingLights.HAZARD_LIGHTS"
+  blinkColor="danger"
+  icon="triangle"
+  (action)="hazardLights($event)"
+/>
+<app-blinking-button
+  [blink]="_rightBlinker()"
+  [type]="blinkingLights.RIGHT_TURN_SIGNAL"
+  blinkColor="success"
+  icon="caret-forward"
+  (action)="turnSignals($event)"
+/>
